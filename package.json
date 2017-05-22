@@ -1,0 +1,143 @@
+{
+  "name": "pomopomo",
+  "productName": "pomopomo",
+  "description": "Experimental pomodoro timer build with electron, nextjs for react rendering and MOBX with realtime sync",
+  "version": "0.0.1",
+  "author": {
+    "name": "Jaga Santagostino",
+    "email": "jagasantagostino@gmail.com"
+  },
+  "repository": "kandros/pomopomo",
+  "main": "main/index.js",
+  "scripts": {
+    "start": "electron main",
+    "build": "next build renderer",
+    "precommit": "lint-staged",
+    "test": "xo",
+    "pack": "npm run build && build --dir",
+    "dist": "npm run build && build"
+  },
+  "build": {
+    "appId": "com.jaga.pomopomo",
+    "asar": false,
+    "win": {
+      "target": [
+        "squirrel"
+      ]
+    },
+    "squirrelWindows": {
+      "loadingGif": "main/static/install-spinner.gif"
+    },
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "icon": "main/static/icons/mac.icns",
+      "extendInfo": {
+        "LSUIElement": 1
+      }
+    },
+    "files": [
+      "main",
+      "node_modules"
+    ],
+    "extraResources": [
+      {
+        "from": "renderer",
+        "to": "app/renderer",
+        "filter": [
+          ".next",
+          "static"
+        ]
+      }
+    ]
+  },
+  "lint-staged": {
+    "*.js": [
+      "npm run test",
+      "prettier --single-quote --no-semi --write",
+      "git add"
+    ]
+  },
+  "xo": {
+    "extends": [
+      "prettier",
+      "prettier/react",
+      "plugin:react/recommended"
+    ],
+    "env": [
+      "browser",
+      "node"
+    ],
+    "rules": {
+      "import/no-extraneous-dependencies": 0,
+      "import/no-unresolved": 0
+    }
+  },
+  "license": "MIT",
+  "dependencies": {
+    "app-root-path": "2.0.1",
+    "arr-flatten": "^1.0.3",
+    "async-retry": "0.3.0",
+    "bytes": "^2.5.0",
+    "chalk": "1.1.3",
+    "child-process-promise": "2.2.1",
+    "deglob": "2.1.0",
+    "docker-file-parser": "^1.0.2",
+    "download": "5.0.3",
+    "electron-config": "0.2.1",
+    "electron-is-dev": "0.1.2",
+    "electron-lets-move": "0.0.5",
+    "electron-routes": "1.0.0",
+    "electron-squirrel-startup": "1.0.0",
+    "email-providers": "1.0.0",
+    "first-run": "1.2.0",
+    "fix-path": "2.1.0",
+    "fs-promise": "2.0.2",
+    "glamor": "^2.20.25",
+    "glob": "^7.1.1",
+    "ignore": "^3.3.0",
+    "ini": "^1.3.4",
+    "istextorbinary": "2.1.0",
+    "load-licenses": "0.2.1",
+    "lodash": "^4.17.4",
+    "mkdirp": "0.5.1",
+    "mobx": "^3.1.9",
+    "mobx-react": "^4.1.8",
+    "moment": "2.18.1",
+    "ms": "1.0.0",
+    "next": "2.1.1",
+    "node-fetch": "^1.6.3",
+    "path-exists": "3.0.0",
+    "path-type": "2.0.0",
+    "polished": "^1.1.2",
+    "react": "15.5.4",
+    "react-dom": "15.5.4",
+    "react-ink": "^6.2.0",
+    "react-input-autosize": "1.1.0",
+    "react-slick": "0.14.8",
+    "resumer": "^0.0.0",
+    "slash": "1.0.0",
+    "slick-carousel": "1.6.0",
+    "split-array": "^1.0.1",
+    "sudo-prompt": "7.0.0",
+    "time-ago": "0.1.0",
+    "tmp-promise": "1.0.3",
+    "to-id": "1.0.5",
+    "trim": "0.0.1",
+    "which-promise": "1.0.0",
+    "winreg": "1.2.3",
+    "prop-types": "latest"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babili-webpack-plugin": "0.0.11",
+    "electron": "1.6.2",
+    "electron-builder": "16.8.3",
+    "electron-builder-squirrel-windows": "16.8.3",
+    "eslint-config-prettier": "1.6.0",
+    "eslint-plugin-react": "6.10.3",
+    "husky": "0.13.3",
+    "lint-staged": "3.4.0",
+    "prettier": "1.0.2",
+    "xo": "0.18.1"
+  }
+}
