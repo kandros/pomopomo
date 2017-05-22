@@ -3,9 +3,10 @@ import {defaultPomoTime} from './constants'
 
 const time = {
   pomodoro: defaultPomoTime,
-  break: 3,
-  'long-break': 9
+  break: 300,
+  'long-break': 900
 }
+
 
 const color = {
   pomodoro: 'red',
@@ -35,6 +36,10 @@ class Store {
   @observable pomoTime = time['pomodoro']
   @observable autorun = true
   @observable completedPomodoros = 0
+
+  @computed get isRunning() {
+    return Boolean(this.intervalId)
+  }
 
   @computed get maxTime() {
     return time[this.timerType]
@@ -108,8 +113,3 @@ const store = new Store();
 export function initStore() {
   return store
 };
-
-reaction(
-  () => store.completedPomodoros,
-  num => console.log(`weeeee, you have completed ${num} pomodoros`)
-)

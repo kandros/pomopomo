@@ -8,6 +8,8 @@ const store = initStore()
 import {defaultPomoTime, pomodoroBarHeight} from '../constants'
 import {lighten} from 'polished'
 import Pomoji from '../components/pomoji'
+import {initReactions} from '../reactions'
+initReactions()
 
 const PomodoroTimer = observer(({store}) => {
   global.store = store
