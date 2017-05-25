@@ -9,9 +9,9 @@ const time = {
 
 
 const color = {
-  pomodoro: 'red',
+  pomodoro: '#2e9fff',
   break: '#2cd42c',
-  'long-break': '#2e9fff'
+  'long-break': 'black'
 }
 
 const timerOrder = [

@@ -65,7 +65,8 @@ const pomodoroWindow = () => {
     maximizable: false,
     titleBarStyle: '',
     transparent: true,
-    toolbar: false
+    toolbar: false,
+    alwaysOnTop: true
   })
 
   win.loadURL(windowURL('pomodoro'))

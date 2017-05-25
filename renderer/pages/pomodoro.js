@@ -19,11 +19,24 @@ const PomodoroTimer = observer(({store}) => {
       <style jsx>{`
         .wrapper {
           box-sizing: border-box;
-          -webkit-app-region: drag;
           width: 100%;
           height: ${pomodoroBarHeight}px;
           position: relative;
           //border: 8px solid rgba(255, 255, 255, 0.5);
+        }
+        .toolbar {
+          position: absolute;
+          width: 100%;
+          height: 15px;
+          background: rgba(99, 99, 99, 0.53);
+          top: 0;
+          left: 0;
+          -webkit-app-region: drag;
+          display: none;
+          z-index: 10;
+        }
+        .wrapper:hover .toolbar{
+          display: block;
         }
         .pomodoro-outer {
           background: rgba(255, 255, 255, 0.5);
@@ -55,6 +68,7 @@ const PomodoroTimer = observer(({store}) => {
       `}</style>
 
       <div className="wrapper">
+        <div className="toolbar"/>
         <div className="pomodoro-outer"
              onClick={store.start}
         >
@@ -69,7 +83,9 @@ const PomodoroTimer = observer(({store}) => {
           </div>
         </div>
       </div>
-      <div className="time-left" style={{color: lighten(0.3, store.color)}}>{calcTime(store.pomoTime)}</div>
+      <div className="time-left" style={{
+        color: store.isRunning ? lighten(0.3, store.color): 'black'
+      }}>{calcTime(store.pomoTime)}</div>
     </div>
   )
 })
@@ -101,8 +117,8 @@ const App = () => (
   <Provider>
     <div>
       <PomodoroTimer store={store}/>
-      <CompletedPomodoros store={store}/>
-      <Debug store={store}/>
+      {/*<CompletedPomodoros store={store}/>*/}
+      {/*<Debug store={store}/>*/}
     </div>
   </Provider>
 )
