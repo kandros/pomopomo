@@ -61,7 +61,7 @@ class Store {
 
 
   @action.bound handleComplete() {
-    // ipcRenderer.send('notify', {title: 'pomopomo', body: `${this.timerType} completed`})
+    ipcRenderer.send('notify', {title: 'pomopomo', body: `${this.timerType} completed`})
     if (this.timerType === 'pomodoro') {
       this.completedPomodoros++
     }
