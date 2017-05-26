@@ -5,7 +5,7 @@ if (require('electron-squirrel-startup')) {
 
 const path = require('path')
 const {pomodoroBarHeight} = require('../renderer/constants')
-const { app, Tray, Menu, BrowserWindow, ipcMain } = require('electron')
+const { app, Tray, Menu, BrowserWindow, ipcMain} = require('electron')
 const ms = require('ms')
 const isDev = require('electron-is-dev')
 const { dir: isDirectory } = require('path-type')
@@ -14,6 +14,7 @@ const fixPath = require('fix-path')
 const { resolve: resolvePath } = require('app-root-path')
 const firstRun = require('first-run')
 const {outerMenu} = require('./menu')
+const notify = require('./notify')
 const server = require('./server')
 
 // Prevent garbage collection
@@ -76,8 +77,7 @@ const pomodoroWindow = () => {
 
 app.on('ready', async () => {
   try {
-    const iconName = process.platform === 'win32' ? 'iconWhite' : 'iconTemplate'
-    tray = new Tray(resolvePath(`./main/static/tray/${iconName}.png`))
+    tray = new Tray(resolvePath(`./main/static/tray/pomodoro.png`))
 
     // Opening the context menu after login should work
     global.tray = tray
@@ -96,16 +96,12 @@ app.on('ready', async () => {
   const windows = {
     pomodoro: pomodoroWindow(),
   }
-  
-  let submenuShown = false
 
-  tray.on('right-click', async event => {
-    const menu = Menu.buildFromTemplate(outerMenu(app, windows))
+  ipcMain.on('notify', (event, notification) => {
+    notify(notification)
+  })
 
-    // Toggle submenu
-    tray.popUpContextMenu(submenuShown ? null : menu)
-    submenuShown = !submenuShown
-
-    event.preventDefault()
+  ipcMain.on('update-timer', (event, timeLeft)=> {
+      tray.setTitle(timeLeft);
   })
 })

@@ -5,10 +5,11 @@ import 'glamor/reset'
 import Ink from 'react-ink'
 import {initStore} from '../store'
 const store = initStore()
-import {defaultPomoTime, pomodoroBarHeight} from '../constants'
+import {pomodoroBarHeight} from '../constants'
 import {lighten} from 'polished'
 import Pomoji from '../components/pomoji'
 import {initReactions} from '../reactions'
+import {calcTime} from '../utils/time'
 initReactions()
 
 const PomodoroTimer = observer(({store}) => {
@@ -76,7 +77,7 @@ const PomodoroTimer = observer(({store}) => {
             className="pomodoro-inner"
             style={{
               width: percentLeft + '% ',
-              background: store.color
+              background: store.isRunning ? store.color : 'black'
             }}
           >
             <Ink/>
@@ -84,19 +85,11 @@ const PomodoroTimer = observer(({store}) => {
         </div>
       </div>
       <div className="time-left" style={{
-        color: store.isRunning ? lighten(0.3, store.color): 'black'
+        color: lighten(0.3, store.color)
       }}>{calcTime(store.pomoTime)}</div>
     </div>
   )
 })
-
-const calcTime = (time) => {
-  const totalSeconds = time
-  const minutes = (totalSeconds / 60) >> 0
-  const seconds = totalSeconds % 60
-  return [minutes, seconds].map(value =>
-    String(value < 10 ? '0' + value : value)).join(':')
-}
 
 const Debug = observer(({store}) => {
   return (

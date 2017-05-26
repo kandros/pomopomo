@@ -1,5 +1,6 @@
 import {action, observable, computed, reaction} from 'mobx'
 import {defaultPomoTime} from './constants'
+import {ipcRenderer} from 'electron'
 
 const time = {
   pomodoro: defaultPomoTime,
@@ -11,7 +12,7 @@ const time = {
 const color = {
   pomodoro: '#2e9fff',
   break: '#2cd42c',
-  'long-break': 'black'
+  'long-break': '#fadf50'
 }
 
 const timerOrder = [
@@ -60,6 +61,7 @@ class Store {
 
 
   @action.bound handleComplete() {
+    // ipcRenderer.send('notify', {title: 'pomopomo', body: `${this.timerType} completed`})
     if (this.timerType === 'pomodoro') {
       this.completedPomodoros++
     }
@@ -104,7 +106,7 @@ class Store {
   }
 
   @action reset = () => {
-    this.pomoTime = 300
+    this.pomoTime = this.maxTime
     clearInterval(this.intervalId)
   }
 }
@@ -112,4 +114,4 @@ class Store {
 const store = new Store();
 export function initStore() {
   return store
-};
+}
