@@ -1,15 +1,6 @@
-if (require('electron-squirrel-startup')) {
-  // eslint-disable-next-line unicorn/no-process-exit
-  process.exit()
-}
-
 const path = require('path')
-const {pomodoroBarHeight} = require('../renderer/constants')
 const { app, Tray, Menu, BrowserWindow, ipcMain} = require('electron')
 const ms = require('ms')
-const isDev = require('electron-is-dev')
-const { dir: isDirectory } = require('path-type')
-const fs = require('fs-promise')
 const fixPath = require('fix-path')
 const { resolve: resolvePath } = require('app-root-path')
 const firstRun = require('first-run')
@@ -28,9 +19,6 @@ app.setName('PomoPomo')
 // This is only required for development because
 // we're setting a property on the bundled app
 // in production, which prevents the icon from flickering
-if (isDev && process.platform === 'darwin') {
-  // App.dock.hide()
-}
 
 // Make Now start automatically on login
 if (!isDev && firstRun()) {
@@ -49,14 +37,14 @@ process.on('uncaughtException', err => {
   showError('Unhandled error appeared', err)
 })
 
-const windowURL = page => {
+function windowURL(page) {
   return (isDev ? `http://localhost:8000` : `next://app`) + `/${page}`
 }
 
 const pomodoroWindow = () => {
   const win = new BrowserWindow({
     width: 650,
-    height: pomodoroBarHeight,
+    height: 40,
     title: 'PomoPomo',
     resizable: true,
     center: true,
