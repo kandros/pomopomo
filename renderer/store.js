@@ -33,7 +33,7 @@ const timerOrder = [
 
 class Store {
   @observable intervalId = null
-  @observable timerCount = 6
+  @observable timerCount = 0
   @observable pomoTime = time['pomodoro']
   @observable autorun = true
   @observable completedPomodoros = 0
