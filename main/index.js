@@ -7,6 +7,7 @@ const firstRun = require('first-run')
 const {outerMenu} = require('./menu')
 const notify = require('./notify')
 const server = require('./server')
+const isDev = require('electron-is-dev')
 
 // Prevent garbage collection
 // Otherwise the tray icon would randomly hide after some time
